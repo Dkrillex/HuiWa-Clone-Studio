@@ -37,3 +37,16 @@ export interface TagGroup {
   label: string;
   tags: string[];
 }
+
+export interface Preset {
+  id: string;
+  name: string;
+  image?: string;
+  icon?: React.ReactNode;
+  prompt: string;
+}
+
+export interface ProductCategory {
+  id: string;
+  label: string;
+}

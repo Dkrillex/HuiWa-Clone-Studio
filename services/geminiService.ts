@@ -116,3 +116,96 @@ export const generateCreativeImage = async (prompt: string): Promise<string> => 
         throw error;
     }
 }
+
+export const generateProductScene = async (
+  base64Image: string,
+  prompt: string,
+  category?: string
+): Promise<string> => {
+    try {
+        const ai = getClient();
+        const cleanBase64 = base64Image.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, '');
+        const mimeType = base64Image.match(/^data:image\/(png|jpeg|jpg|webp);base64,/)?.[1] || 'jpeg';
+
+        const categoryContext = category ? `The object is a ${category}.` : '';
+
+        const fullPrompt = `You are an expert product photographer. 
+        Task: Create a realistic product photo using the provided object.
+        Context: ${categoryContext}
+        Instructions:
+        1. Place the object from the reference image into the following scene: "${prompt}".
+        2. Ensure the object blends naturally with the background (shadows, reflections, lighting matching).
+        3. Do NOT distort the product itself. Keep its details, logo, and shape exactly as is.
+        4. If the background prompt implies a surface (table, floor), ensure the product sits on it correctly with contact shadows.
+        5. Return a high-quality, photorealistic image.`;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-image', 
+            contents: {
+                parts: [
+                    { text: fullPrompt },
+                    { inlineData: { data: cleanBase64, mimeType: `image/${mimeType}` } }
+                ]
+            }
+        });
+
+        let imageUrl = '';
+        const parts = response.candidates?.[0]?.content?.parts;
+        if (parts) {
+            for (const part of parts) {
+                if (part.inlineData) {
+                    imageUrl = `data:image/png;base64,${part.inlineData.data}`;
+                    break;
+                }
+            }
+        }
+        if (!imageUrl) throw new Error("No image generated.");
+        return imageUrl;
+    } catch (error) {
+        console.error("Product Scene Gen Error:", error);
+        throw error;
+    }
+}
+
+export const removeWatermark = async (base64Image: string): Promise<string> => {
+    try {
+        const ai = getClient();
+        const cleanBase64 = base64Image.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, '');
+        const mimeType = base64Image.match(/^data:image\/(png|jpeg|jpg|webp);base64,/)?.[1] || 'jpeg';
+
+        const prompt = `Task: Remove all watermarks, text, logos, and overlaid graphics from this image.
+        Instructions:
+        1. Identify any text, logos, or semi-transparent watermarks overlaying the main content.
+        2. Remove them completely.
+        3. Inpaint the removed areas to match the surrounding texture, lighting, and background seamlessly.
+        4. Do not alter the main subject or the overall composition aside from cleaning the overlay.
+        5. Return the clean high-quality image.`;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-image',
+            contents: {
+                parts: [
+                    { text: prompt },
+                    { inlineData: { data: cleanBase64, mimeType: `image/${mimeType}` } }
+                ]
+            }
+        });
+
+        let imageUrl = '';
+        const parts = response.candidates?.[0]?.content?.parts;
+        if (parts) {
+            for (const part of parts) {
+                if (part.inlineData) {
+                    imageUrl = `data:image/png;base64,${part.inlineData.data}`;
+                    break;
+                }
+            }
+        }
+        if (!imageUrl) throw new Error("No image generated.");
+        return imageUrl;
+
+    } catch (error) {
+        console.error("Remove Watermark Error:", error);
+        throw error;
+    }
+}

@@ -18,7 +18,7 @@ import {
   Camera,
   LayoutGrid
 } from 'lucide-react';
-import { Tool, ToolCategory, TagGroup } from './types';
+import { Tool, ToolCategory, TagGroup, Preset, ProductCategory } from './types';
 
 export const TOOLS: Tool[] = [
   // Product On Body
@@ -63,4 +63,91 @@ export const SAMPLE_IMAGES = [
   'https://picsum.photos/id/338/400/400',
   'https://picsum.photos/id/823/400/400',
   'https://picsum.photos/id/1027/400/400'
+];
+
+export const PRODUCT_CATEGORIES: ProductCategory[] = [
+    { id: 'bag', label: '箱包' },
+    { id: 'shoe', label: '鞋靴' },
+    { id: 'clothing', label: '服装' },
+    { id: 'beauty', label: '美妆' },
+    { id: 'furniture', label: '家居' },
+    { id: 'other', label: '其他' }
+];
+
+export const BG_PRESETS: Preset[] = [
+    {
+        id: 'wood-hanger',
+        name: '木棍衣杆',
+        image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=100&q=80',
+        prompt: 'hanging on a minimal wooden clothes rack, clean studio background, soft daylight'
+    },
+    {
+        id: 'light-wood',
+        name: '浅色木枝',
+        image: 'https://images.unsplash.com/photo-1515463138280-67d1dcbf3175?auto=format&fit=crop&w=100&q=80',
+        prompt: 'placed on light colored natural wood texture, artistic dried branches nearby, soft warm lighting, beige tones'
+    },
+    {
+        id: 'white-yarn',
+        name: '白纱柔风',
+        image: 'https://images.unsplash.com/photo-1505322747496-063f78a876a4?auto=format&fit=crop&w=100&q=80',
+        prompt: 'placed on soft white flowing chiffon fabric, dreamy ethereal lighting, elegant high-end style'
+    },
+    {
+        id: 'stone-podium',
+        name: '石膏展台',
+        image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=100&q=80',
+        prompt: 'placed on a geometric white plaster podium, minimalist architectural style, hard shadows, modern look'
+    },
+    {
+        id: 'nature',
+        name: '自然光影',
+        image: 'https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&fit=crop&w=100&q=80',
+        prompt: 'outdoors in a lush garden, dappled sunlight through leaves, natural bokeh background'
+    },
+    {
+        id: 'custom',
+        name: '自定义',
+        icon: <Palette size={24} />,
+        prompt: ''
+    }
+];
+
+export const BG_SWAP_SAMPLES = [
+    'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=200&q=80', // Bag
+    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=200&q=80', // Shoe
+    'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=200&q=80', // Sofa
+    'https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?auto=format&fit=crop&w=200&q=80', // Skincare
+    'https://images.unsplash.com/photo-1596462502278-27bfdd403348?auto=format&fit=crop&w=200&q=80', // Lipstick
+];
+
+export const WATERMARK_SAMPLES = [
+    'https://images.unsplash.com/photo-1554629947-334ff61d85dc?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1505322747496-063f78a876a4?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80',
+];
+
+export const WATERMARK_CASES = [
+    {
+        id: '1',
+        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+        label: 'Portrait'
+    },
+    {
+        id: '2',
+        image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80',
+        label: 'Landscape'
+    },
+    {
+        id: '3',
+        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+        label: 'Men'
+    },
+    {
+        id: '4',
+        image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?auto=format&fit=crop&w=400&q=80',
+        label: 'Indoor'
+    }
 ];
